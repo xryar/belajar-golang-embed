@@ -25,7 +25,7 @@ func TestEmbedImage(t *testing.T) {
 	}
 }
 
-//go:embed files/*
+//go:embed files/*.txt
 var files embed.FS
 
 func TestMulipleEmbed(t *testing.T) {
@@ -37,4 +37,15 @@ func TestMulipleEmbed(t *testing.T) {
 
 	c, _ := files.ReadFile("files/c.txt")
 	fmt.Println(string(c))
+}
+
+func TestPathMatcher(t *testing.T) {
+	dirEntries, _ := files.ReadDir("files")
+	for _, entry := range dirEntries {
+		if !entry.IsDir() {
+			fmt.Println(entry.Name())
+			file, _ := files.ReadFile("files/" + entry.Name())
+			fmt.Println(string(file))
+		}
+	}
 }
