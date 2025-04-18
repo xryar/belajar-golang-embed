@@ -1,7 +1,7 @@
 package belajargolangembed
 
 import (
-	_ "embed"
+	"embed"
 	"fmt"
 	"io/fs"
 	"os"
@@ -23,4 +23,18 @@ func TestEmbedImage(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+//go:embed files/*
+var files embed.FS
+
+func TestMulipleEmbed(t *testing.T) {
+	a, _ := files.ReadFile("files/a.txt")
+	fmt.Println(string(a))
+
+	b, _ := files.ReadFile("files/b.txt")
+	fmt.Println(string(b))
+
+	c, _ := files.ReadFile("files/c.txt")
+	fmt.Println(string(c))
 }
